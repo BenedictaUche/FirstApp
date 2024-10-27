@@ -3,48 +3,93 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    padding: 15,
     backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 5,
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    marginBottom: 15,
   },
   avatar: {
     width: 50,
     height: 50,
     borderRadius: 5,
-    marginRight: 10,
-  },
-  info: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   textContainer: {
-    marginLeft: 10,
+    flexShrink: 1,
+    marginLeft: 15,
   },
   fullName: {
     fontSize: 16,
     fontWeight: 'bold',
   },
   description: {
-    marginTop: 5,
+    fontSize: 14,
+    color: '#586069',
+    marginVertical: 4,
   },
   language: {
-    marginTop: 5,
     paddingHorizontal: 8,
     paddingVertical: 4,
     backgroundColor: '#0366d6',
     color: 'white',
     borderRadius: 4,
     alignSelf: 'flex-start',
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginTop: 4,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 10,
+  },
+  statItem: {
+    alignItems: 'center',
+  },
+  statCount: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  statLabel: {
+    fontSize: 12,
+    color: '#586069',
   },
 });
 
+// Helper function to format counts (e.g., 8439 to "8.4k")
+const formatCount = (count) => {
+  return count >= 1000 ? (count / 1000).toFixed(1) + 'k' : count.toString();
+};
+
 const RepositoryItem = ({ repository }) => (
   <View style={styles.container}>
-    <View style={styles.info}>
+    <View style={styles.infoContainer}>
       <Image style={styles.avatar} source={{ uri: repository.ownerAvatarUrl }} />
       <View style={styles.textContainer}>
         <Text style={styles.fullName}>{repository.fullName}</Text>
         <Text style={styles.description}>{repository.description}</Text>
         <Text style={styles.language}>{repository.language}</Text>
+      </View>
+    </View>
+    <View style={styles.statsContainer}>
+      <View style={styles.statItem}>
+        <Text style={styles.statCount}>{formatCount(repository.stargazersCount)}</Text>
+        <Text style={styles.statLabel}>Stars</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statCount}>{formatCount(repository.forksCount)}</Text>
+        <Text style={styles.statLabel}>Forks</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statCount}>{repository.reviewCount}</Text>
+        <Text style={styles.statLabel}>Reviews</Text>
+      </View>
+      <View style={styles.statItem}>
+        <Text style={styles.statCount}>{repository.ratingAverage}</Text>
+        <Text style={styles.statLabel}>Rating</Text>
       </View>
     </View>
   </View>
