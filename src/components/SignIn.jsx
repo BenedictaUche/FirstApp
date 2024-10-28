@@ -1,7 +1,8 @@
 import { StyleSheet, View, TextInput, Button } from "react-native";
 import { useFormik } from "formik";
 import Text from "./Text";
-import * as yup from 'yup';
+import * as yup from "yup";
+import useSignIn from "../hooks/useSignIn";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   errorText: {
-    color: '#d73a4a',
+    color: "#d73a4a",
     marginBottom: 5,
   },
 });
@@ -27,28 +28,39 @@ const initialValues = {
 };
 
 const validationSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required("Username is required"),
-  password: yup
-    .string()
-    .required("Password is required"),
+  username: yup.string().required("Username is required"),
+  password: yup.string().required("Password is required"),
 });
 
-const SignIn = ({ onSubmit }) => {
+const SignIn = () => {
+  const [signInFunction] = useSignIn();
+
   const formik = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (values) => {
-      if (onSubmit) {
-        onSubmit(values);
+    onSubmit: async (values) => {
+      const { username, password } = values;
+
+      try {
+        const response = await signInFunction({ username, password });
+        console.log(response)
+
+        if (response && response.data) {
+          console.log("Access Token:", response.data.authenticate.accessToken);
+        } else if (response.error) {
+          console.log("Sign-in error:", response.error.message);
+        } else {
+          console.log("No data returned from signIn");
+        }
+      } catch (e) {
+        console.log("Sign-in error:", e);
       }
     },
   });
 
   const getInputStyle = (field) => [
     styles.input,
-    formik.touched[field] && formik.errors[field] && { borderColor: '#d73a4a' },
+    formik.touched[field] && formik.errors[field] && { borderColor: "#d73a4a" },
   ];
 
   return (
@@ -56,9 +68,9 @@ const SignIn = ({ onSubmit }) => {
       <TextInput
         placeholder="Username"
         value={formik.values.username}
-        onChangeText={formik.handleChange('username')}
-        onBlur={() => formik.setFieldTouched('username')}
-        style={getInputStyle('username')}
+        onChangeText={formik.handleChange("username")}
+        onBlur={() => formik.setFieldTouched("username")}
+        style={getInputStyle("username")}
       />
       {formik.touched.username && formik.errors.username && (
         <Text style={styles.errorText}>{formik.errors.username}</Text>
@@ -66,10 +78,10 @@ const SignIn = ({ onSubmit }) => {
       <TextInput
         placeholder="Password"
         value={formik.values.password}
-        onChangeText={formik.handleChange('password')}
-        onBlur={() => formik.setFieldTouched('password')}
+        onChangeText={formik.handleChange("password")}
+        onBlur={() => formik.setFieldTouched("password")}
         secureTextEntry
-        style={getInputStyle('password')}
+        style={getInputStyle("password")}
       />
       {formik.touched.password && formik.errors.password && (
         <Text style={styles.errorText}>{formik.errors.password}</Text>
