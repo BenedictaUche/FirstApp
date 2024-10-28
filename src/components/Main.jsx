@@ -5,6 +5,8 @@ import RepositoryList from "./RepositoryList";
 import Text from "./Text";
 import AppBar from "./AppBar";
 import SignIn from "./SignIn";
+import BodyMassIndexCalculator from "./Bmi";
+import WhatIsMyPlatform from "./MyPlatform";
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +24,8 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signin" element={<SignIn />}  />
-
+        <Route path="/bmi" element={<BodyMassIndexCalculator />} />
+        <Route path="/myplatform" element={<WhatIsMyPlatform />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       {/* <Text fontWeight="bold" fontSize="subheading">Rate Repository go lite Application</Text> */}

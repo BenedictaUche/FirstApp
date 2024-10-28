@@ -39,6 +39,16 @@ const AppBar = () => {
             <Text style={{ color: "#fff" }}>Sign in</Text>
           </Link>
         </Pressable>
+        <Pressable style={styles.button}>
+          <Link to="/bmi">
+            <Text style={{ color: "#fff" }}>BMI</Text>
+          </Link>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Link to="/myplatform">
+            <Text style={{ color: "#fff" }}>My platform</Text>
+          </Link>
+        </Pressable>
       </ScrollView>
     </View>
   );
