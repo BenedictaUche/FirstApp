@@ -1,7 +1,8 @@
 
-import { FlatList, View, StyleSheet } from 'react-native';
+import { FlatList, View, StyleSheet, Pressable } from 'react-native';
 import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
+import { Navigate, useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   separator: {

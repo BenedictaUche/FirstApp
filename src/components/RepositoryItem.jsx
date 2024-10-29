@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +58,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#586069',
   },
+  githubButton: {
+    backgroundColor: '#000',
+    color: '#ffffff',
+    padding: 10,
+    display: 'flex',
+    justifyContent: 'center',
+    borderRadius: 8,
+    textAlign: 'center',
+    marginTop: 15,
+    fontSize: 16,
+  }
 });
 
 // Helper function to format counts (e.g., 8439 to "8.4k")
@@ -64,7 +76,12 @@ const formatCount = (count) => {
   return count >= 1000 ? (count / 1000).toFixed(1) + 'k' : count.toString();
 };
 
+
+
+
 const RepositoryItem = ({ repository }) => (
+  // const {navigate} = useNavigate();
+
   <View style={styles.container}>
     <View style={styles.infoContainer}>
       <Image style={styles.avatar} source={{ uri: repository.ownerAvatarUrl }} />
@@ -92,6 +109,7 @@ const RepositoryItem = ({ repository }) => (
         <Text style={styles.statLabel}>Rating</Text>
       </View>
     </View>
+    <Pressable style={styles.githubButton}>Open in Github</Pressable>
   </View>
 );
 

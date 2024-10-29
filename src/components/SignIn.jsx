@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import Text from "./Text";
 import * as yup from "yup";
 import useSignIn from "../hooks/useSignIn";
+import { render, fireEvent, screen } from '@testing-library/react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -92,3 +93,22 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+// describe('Form', () => {
+//   it('calls function provided by onSubmit prop after pressing the submit button', () => {
+//     const onSubmit = jest.fn();
+//     render(<Form onSubmit={onSubmit} />);
+
+//     fireEvent.changeText(screen.getByPlaceholderText('Username'), 'kalle');
+//     fireEvent.changeText(screen.getByPlaceholderText('Password'), 'password');
+//     fireEvent.press(screen.getByText('Submit'));
+
+//     expect(onSubmit).toHaveBeenCalledTimes(1);
+
+//     // onSubmit.mock.calls[0][0] contains the first argument of the first call
+//     expect(onSubmit.mock.calls[0][0]).toEqual({
+//       username: 'kalle',
+//       password: 'password',
+//     });
+//   });
+// });
